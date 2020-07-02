@@ -1,12 +1,11 @@
-exports.exportData = function (token) {
+exports.exportPDF = function (token) {
   const axios = require('axios').default;
   const fs = require('fs');
   const FormData = require('form-data');
   const bodyFormData = new FormData();
   bodyFormData.append('token', token);
-  bodyFormData.append('content', 'record');
-  bodyFormData.append('format', 'csv');
-  bodyFormData.append('type', 'flat');
+  bodyFormData.append('content', 'pdf');
+  bodyFormData.append('instrument', '');
   bodyFormData.append('returnFormat', 'json');
 
   axios.request({
@@ -16,7 +15,7 @@ exports.exportData = function (token) {
     data: bodyFormData,
     headers: bodyFormData.getHeaders(),
   }).then((result) => {
-    const outputFilename = 'records.csv';
+    const outputFilename = 'instruments.pdf';
     fs.writeFileSync(outputFilename, result.data);
     return outputFilename;
   }).catch(error => {
